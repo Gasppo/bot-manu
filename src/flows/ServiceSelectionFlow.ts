@@ -2,9 +2,10 @@ import { addKeyword, EVENTS } from "@builderbot/bot";
 import { MetaProvider } from "@builderbot/provider-meta";
 import { ZnappFlow } from "./ZnappFlow";
 import { ZnappLiteFlow } from "./ZnappLiteFlow";
+import { HumanHandoverFlow } from "./HumanHandoverFlow";
 
 export const ServiceSelectionFlow = addKeyword<MetaProvider>(EVENTS.ACTION)
-  .addAction({ capture: true }, async (ctx, { provider, gotoFlow, endFlow }) => {
+  .addAction({ capture: true }, async (ctx, { provider, state, gotoFlow, endFlow }) => {
     try {
       const userChoice = ctx.body.toLowerCase();
 
@@ -16,11 +17,19 @@ export const ServiceSelectionFlow = addKeyword<MetaProvider>(EVENTS.ACTION)
         return gotoFlow(ZnappLiteFlow);
       }
 
-      await provider.sendText(
+      await provider.sendButtons(
         ctx.from,
-        "💬 Te estamos contactando con alguien del equipo.\n\nMientras tanto, si querés ir leyendo nuestras preguntas frecuentes, podés visitar:\n\n🔗 znapp.la"
+        [
+          { body: "Volver al menú" }
+        ],
+        "💬 Te estamos contactando con alguien del equipo.\n\nMientras tanto, si querés ir leyendo nuestras preguntas frecuentes, podés visitar:\n\n🔗 znapp.la\n\nSi quieres cancelar la solicitud, pulsa el boton de volver al menu"
       );
-      return endFlow();
+
+      await state.update({
+        humanHandoverStartTime: new Date(),
+      });
+      
+      return gotoFlow(HumanHandoverFlow);
 
     } catch (error) {
       console.error("[Error ServiceSelectionFlow]:", error);

@@ -6,6 +6,7 @@ import { ServiceSelectionFlow } from "./ServiceSelectionFlow";
 import { ZnappFlow } from "./ZnappFlow";
 import { ZnappLiteFlow } from "./ZnappLiteFlow";
 import { FallbackFlow } from "./FallbackFlow";
+import { HumanHandoverFlow } from "./HumanHandoverFlow";
 // import { FallbackFlow, CatchAllFlow } from "./FallbackFlow";
 
 export default createFlow([
@@ -13,6 +14,7 @@ export default createFlow([
   InstagramWelcomeFlow,  // Más específico primero
   ServiceSelectionFlow,
   ZnappFlow,
+  HumanHandoverFlow,
   ZnappLiteFlow,
   FallbackFlow,          // Fallback para EVENTS.WELCOME
   WelcomeFlow,           // General welcome
