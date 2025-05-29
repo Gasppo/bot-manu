@@ -9,8 +9,13 @@ export const FallbackFlow = addKeyword<MetaProvider>(EVENTS.ACTION)
     try {
 
       // Solo enviar mensaje si han pasado más de 5 minutos desde el último
-      await provider.sendText(
+      await provider.sendButtons(
         ctx.from,
+        [
+          { body: "Znapp" },
+          { body: "Znapp Lite" },
+          { body: "Otro tema" }
+        ],
         "👋 ¡Hola! Bienvenido/a a Znapp.\n\n¿En qué podemos ayudarte hoy?\n\n1️⃣ Znapp – Necesito hacer tareas en campo y no tengo equipo propio\n\n2️⃣ Znapp Lite – Tengo equipo en la calle y necesito organizar su trabajo\n\n3️⃣ Otro tema puntual (consultá por acá)\n\n💡 También podés escribir directamente tu consulta y te ayudaremos."
       );
 

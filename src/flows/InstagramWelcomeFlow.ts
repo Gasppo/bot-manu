@@ -7,8 +7,13 @@ export const InstagramWelcomeFlow = addKeyword<MetaProvider>([
   "Hola, quiero más información sobre Znapp"
 ]).addAction(async (ctx, { provider, gotoFlow }) => {
   try {
-    await provider.sendText(
+    await provider.sendButtons(
       ctx.from,
+      [
+        { body: "Znapp" },
+        { body: "Znapp Lite" },
+        { body: "Otro tema" }
+      ],
       "👋 ¡Hola! Gracias por escribirnos desde Instagram.\n\nQueremos ayudarte de la mejor manera posible. Para eso, contanos un poco más sobre lo que necesitás:\n\n¿Qué servicio te interesa?\n\n1️⃣ Znapp – Necesito hacer tareas en campo y no tengo equipo propio\n\n2️⃣ Znapp Lite – Tengo equipo en la calle y necesito organizar su trabajo\n\n3️⃣ Otro tema puntual (consultá por acá)"
     );
     
