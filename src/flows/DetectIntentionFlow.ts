@@ -2,17 +2,14 @@ import { createFlowRouting } from "@builderbot-plugins/langchain";
 import { EVENTS } from "@builderbot/bot";
 import { TFlow } from "@builderbot/bot/dist/types";
 import { config } from "../config";
+import { FallbackFlow } from "./FallbackFlow";
 import { InstagramWelcomeFlow } from "./InstagramWelcomeFlow";
-import { ServiceSelectionFlow } from "./ServiceSelectionFlow";
-import { WelcomeFlow } from "./WelcomeFlow";
 import { ZnappFlow } from "./ZnappFlow";
 import { ZnappLiteFlow } from "./ZnappLiteFlow";
-import { FallbackFlow } from "./FallbackFlow";
 
 const intentionFlowMap: Record<string, TFlow> = {
     INSTAGRAM_WELCOME: InstagramWelcomeFlow,
-    SERVICE_SELECTION: ServiceSelectionFlow,
-    WELCOME: WelcomeFlow,
+    WELCOME: FallbackFlow,
     ZNAPP: ZnappFlow,
     ZNAPP_LITE: ZnappLiteFlow,
 };
@@ -63,14 +60,10 @@ export const DetectIntentionFlow = createFlowRouting
   .create({
     afterEnd(flow) {
       return flow.addAction(async (ctx, { state, gotoFlow }) => {
-        console.log("[DetectIntentionFlow] New message:", `${ctx.from} - ${ctx.body}`);
-        
         const intention: string = await state.get("intention");
-        console.log("[DetectIntentionFlow] Detected intention:", intention);
-        
+
         // Si la intención no coincide con ninguna, se redirige al flujo de bienvenida
         const targetFlow = intentionFlowMap[intention] || FallbackFlow;
-        console.log("[DetectIntentionFlow] Redirecting to:", intention || "WELCOME");
         
         return gotoFlow(targetFlow);
       });

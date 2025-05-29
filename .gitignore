@@ -14,3 +14,4 @@ pnpm-lock.yaml
 yarn.lock
 .vscode/
 .idea/
+db.json

@@ -1,4 +1,4 @@
-import { createBot } from "@builderbot/bot";
+import { createBot, MemoryDB } from "@builderbot/bot";
 import { JsonFileDB } from "@builderbot/database-json";
 import { config } from "./config";
 import { provider } from "./provider";
@@ -14,7 +14,7 @@ const main = async () => {
             {
                 flow: flows,
                 provider,
-                database: new JsonFileDB({ filename: "db.json" }),
+                database: new MemoryDB(),
             },
             {
                 queue: {
