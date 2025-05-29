@@ -1,0 +1,16 @@
+dist/*
+node_modules
+.env
+.env.prod
+
+*_sessions
+*tokens
+.wwebjs*
+
+*.log
+*qr.png
+
+pnpm-lock.yaml
+yarn.lock
+.vscode/
+.idea/
