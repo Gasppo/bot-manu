@@ -1,5 +1,5 @@
 import { EVENTS } from "@builderbot/bot";
-import { createMetaFlow } from "~/provider";
+import { createMetaFlow } from "../provider";
 import { FallbackFlow } from "./FallbackFlow";
 
 export const HumanHandoverFlow = createMetaFlow([
